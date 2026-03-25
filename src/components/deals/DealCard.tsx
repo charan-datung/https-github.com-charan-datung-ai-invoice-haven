@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import { cn, formatPeso } from '@/lib/utils';
-import { useCountdown } from '@/hooks/useCountdown';
 import type { Deal } from '@/types';
 import CategoryIcon from '@/components/shared/CategoryIcon';
+import CountdownTimer from '@/components/shared/CountdownTimer';
 
 interface DealCardProps {
   deal: Deal;
@@ -21,30 +21,6 @@ const categoryBg: Record<string, string> = {
   'junk-shop': 'bg-green-50',
   'services': 'bg-indigo-50',
   'home-based': 'bg-amber-50',
-};
-
-const CountdownTimer = ({ expiresAt }: { expiresAt: string }) => {
-  const { hours, minutes, seconds, isExpired, isUrgent } = useCountdown(expiresAt);
-
-  if (isExpired) {
-    return (
-      <span className="text-xs font-semibold text-kanto-red">Tapos na!</span>
-    );
-  }
-
-  return (
-    <div className={cn('flex items-center gap-1 text-xs font-mono font-bold', isUrgent ? 'text-kanto-red' : 'text-kanto-brown')}>
-      {hours > 0 && (
-        <>
-          <span className="bg-kanto-brown/10 px-1.5 py-0.5 rounded">{String(hours).padStart(2, '0')}</span>
-          <span>:</span>
-        </>
-      )}
-      <span className="bg-kanto-brown/10 px-1.5 py-0.5 rounded">{String(minutes).padStart(2, '0')}</span>
-      <span>:</span>
-      <span className="bg-kanto-brown/10 px-1.5 py-0.5 rounded">{String(seconds).padStart(2, '0')}</span>
-    </div>
-  );
 };
 
 const UrgencyBadge = ({ level }: { level: string }) => {

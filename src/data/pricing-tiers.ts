@@ -4,7 +4,7 @@ export const pricingTiers: PricingTier[] = [
   {
     name: 'Libre',
     price: 0,
-    period: 'forever',
+    period: 'Libre forever',
     description: 'Para sa mga nagsisimula pa lang. Walang bayad, walang catch.',
     features: [
       'Store profile sa Kanto',

@@ -1,5 +1,6 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, User } from 'lucide-react';
+import { MapPin, User, Heart } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { Store } from '@/types';
 import CategoryIcon from './CategoryIcon';
@@ -28,8 +29,40 @@ const categoryLabels: Record<string, string> = {
   'home-based': 'Home-Based',
 };
 
+function getFavorites(): string[] {
+  try {
+    return JSON.parse(localStorage.getItem('kanto-favorites') || '[]');
+  } catch {
+    return [];
+  }
+}
+
+function toggleFavorite(storeId: string): boolean {
+  const favs = getFavorites();
+  const index = favs.indexOf(storeId);
+  if (index >= 0) {
+    favs.splice(index, 1);
+  } else {
+    favs.push(storeId);
+  }
+  localStorage.setItem('kanto-favorites', JSON.stringify(favs));
+  return index < 0;
+}
+
 const StoreCard = ({ store }: StoreCardProps) => {
   const gradient = categoryGradients[store.category] || 'from-gray-400 to-gray-300';
+  const [isFav, setIsFav] = useState(false);
+
+  useEffect(() => {
+    setIsFav(getFavorites().includes(store.id));
+  }, [store.id]);
+
+  const handleFavorite = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const nowFav = toggleFavorite(store.id);
+    setIsFav(nowFav);
+  };
 
   return (
     <Link
@@ -52,9 +85,21 @@ const StoreCard = ({ store }: StoreCardProps) => {
             <CategoryIcon category={store.category} size={48} />
           </div>
         )}
-        <div className="absolute top-3 right-3">
+        <div className="absolute top-3 left-3">
           <StatusBadge status={store.status} />
         </div>
+        <button
+          onClick={handleFavorite}
+          className="absolute top-3 right-3 p-1.5 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors"
+          aria-label={isFav ? 'Alisin sa Suki' : 'Idagdag sa Suki'}
+        >
+          <Heart
+            className={cn(
+              'w-4 h-4 transition-colors',
+              isFav ? 'text-red-500 fill-red-500' : 'text-kanto-gray'
+            )}
+          />
+        </button>
       </div>
 
       {/* Content */}

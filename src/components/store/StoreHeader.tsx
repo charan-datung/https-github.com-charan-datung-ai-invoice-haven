@@ -1,4 +1,5 @@
-import { BadgeCheck, Package, Truck, MessageCircle, Wrench, Recycle } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { BadgeCheck, Package, Truck, MessageCircle, Wrench, Recycle, Phone, MessageSquare, Heart, Share2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { Store, FulfillmentType } from '@/types';
 import StatusBadge from '@/components/shared/StatusBadge';
@@ -35,8 +36,53 @@ const fulfillmentConfig: Record<FulfillmentType, { label: string; icon: React.El
   'junk-collection': { label: 'Collection', icon: Recycle },
 };
 
+function getFavorites(): string[] {
+  try {
+    return JSON.parse(localStorage.getItem('kanto-favorites') || '[]');
+  } catch {
+    return [];
+  }
+}
+
+function toggleFavorite(storeId: string): boolean {
+  const favs = getFavorites();
+  const index = favs.indexOf(storeId);
+  if (index >= 0) {
+    favs.splice(index, 1);
+  } else {
+    favs.push(storeId);
+  }
+  localStorage.setItem('kanto-favorites', JSON.stringify(favs));
+  return index < 0;
+}
+
 const StoreHeader = ({ store }: StoreHeaderProps) => {
   const gradient = categoryGradients[store.category] || 'from-gray-400 to-gray-300';
+  const phone = store.gcashNumber || '';
+  const [isFav, setIsFav] = useState(false);
+
+  useEffect(() => {
+    setIsFav(getFavorites().includes(store.id));
+  }, [store.id]);
+
+  const handleFavorite = () => {
+    const nowFav = toggleFavorite(store.id);
+    setIsFav(nowFav);
+  };
+
+  const handleShare = async () => {
+    const url = `${window.location.origin}/store/${store.id}`;
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: store.name, text: store.tagline, url });
+      } catch {
+        // user cancelled
+      }
+    } else {
+      await navigator.clipboard.writeText(url);
+      alert('Link copied!');
+    }
+  };
 
   return (
     <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
@@ -56,6 +102,18 @@ const StoreHeader = ({ store }: StoreHeaderProps) => {
           {store.verified && (
             <BadgeCheck className="w-6 h-6 text-kanto-teal shrink-0 mt-1" />
           )}
+          <button
+            onClick={handleFavorite}
+            className="ml-auto shrink-0 p-2 rounded-full hover:bg-kanto-cream transition-colors"
+            aria-label={isFav ? 'Alisin sa Suki' : 'Idagdag sa Suki'}
+          >
+            <Heart
+              className={cn(
+                'w-6 h-6 transition-colors',
+                isFav ? 'text-red-500 fill-red-500' : 'text-kanto-gray'
+              )}
+            />
+          </button>
         </div>
 
         <p className="text-kanto-gray text-sm mb-3">
@@ -82,6 +140,53 @@ const StoreHeader = ({ store }: StoreHeaderProps) => {
             "{store.tagline}"
           </p>
         )}
+
+        {/* Contact buttons */}
+        <div className="flex flex-wrap gap-2 mb-4">
+          {phone && (
+            <a
+              href={`sms:${phone}`}
+              className="inline-flex items-center gap-1.5 px-4 py-2 bg-kanto-teal text-white text-xs font-semibold rounded-lg hover:bg-kanto-teal/90 transition-colors"
+            >
+              <MessageSquare className="w-4 h-4" />
+              Pabulong
+            </a>
+          )}
+          <a
+            href="https://m.me/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-500 text-white text-xs font-semibold rounded-lg hover:bg-blue-600 transition-colors"
+          >
+            <MessageCircle className="w-4 h-4" />
+            Messenger
+          </a>
+          {phone && (
+            <a
+              href={`viber://chat?number=${phone}`}
+              className="inline-flex items-center gap-1.5 px-4 py-2 bg-purple-500 text-white text-xs font-semibold rounded-lg hover:bg-purple-600 transition-colors"
+            >
+              <MessageCircle className="w-4 h-4" />
+              Viber
+            </a>
+          )}
+          {phone && (
+            <a
+              href={`tel:${phone}`}
+              className="inline-flex items-center gap-1.5 px-4 py-2 bg-kanto-green text-white text-xs font-semibold rounded-lg hover:bg-kanto-green/90 transition-colors"
+            >
+              <Phone className="w-4 h-4" />
+              Tawagan
+            </a>
+          )}
+          <button
+            onClick={handleShare}
+            className="inline-flex items-center gap-1.5 px-4 py-2 bg-kanto-cream text-kanto-brown text-xs font-semibold rounded-lg hover:bg-kanto-cream/80 transition-colors"
+          >
+            <Share2 className="w-4 h-4" />
+            Share
+          </button>
+        </div>
 
         {/* Fulfillment badges */}
         <div className="flex flex-wrap gap-2">

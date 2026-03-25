@@ -4,15 +4,22 @@ import { cn } from '@/lib/utils';
 
 interface SearchBarProps {
   onChange: (query: string) => void;
+  onNearMeChange?: (nearMe: boolean) => void;
 }
 
-const SearchBar = ({ onChange }: SearchBarProps) => {
+const SearchBar = ({ onChange, onNearMeChange }: SearchBarProps) => {
   const [query, setQuery] = useState('');
   const [nearMe, setNearMe] = useState(false);
 
   const handleChange = (value: string) => {
     setQuery(value);
     onChange(value);
+  };
+
+  const handleNearMeToggle = () => {
+    const next = !nearMe;
+    setNearMe(next);
+    onNearMeChange?.(next);
   };
 
   return (
@@ -28,7 +35,7 @@ const SearchBar = ({ onChange }: SearchBarProps) => {
         />
       </div>
       <button
-        onClick={() => setNearMe(!nearMe)}
+        onClick={handleNearMeToggle}
         className={cn(
           'flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-medium transition-colors shrink-0',
           nearMe

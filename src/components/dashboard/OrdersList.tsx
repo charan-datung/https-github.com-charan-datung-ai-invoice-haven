@@ -12,11 +12,11 @@ interface Order {
 }
 
 const statusStyles: Record<OrderStatus, string> = {
-  Pending: 'bg-yellow-100 text-yellow-800',
-  Confirmed: 'bg-blue-100 text-blue-800',
-  'Ready for Pickup': 'bg-green-100 text-green-800',
-  Completed: 'bg-gray-100 text-gray-600',
-  Cancelled: 'bg-red-100 text-red-800',
+  Pending: 'bg-kanto-gold/15 text-kanto-gold',
+  Confirmed: 'bg-kanto-teal/15 text-kanto-teal',
+  'Ready for Pickup': 'bg-kanto-green/15 text-kanto-green',
+  Completed: 'bg-kanto-gray-light text-kanto-gray',
+  Cancelled: 'bg-kanto-red/15 text-kanto-red',
 };
 
 const mockOrders: Order[] = [

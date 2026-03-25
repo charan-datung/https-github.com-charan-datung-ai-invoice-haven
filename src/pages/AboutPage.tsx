@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Search, Users, Lightbulb, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import PageMeta from '@/components/shared/PageMeta';
 
 const pillars = [
   {
@@ -36,6 +37,7 @@ const stats = [
 const AboutPage = () => {
   return (
     <div className="min-h-screen bg-kanto-cream">
+      <PageMeta title="About Kanto" />
       {/* Hero */}
       <section className="relative bg-gradient-to-br from-kanto-orange/10 via-kanto-gold/5 to-kanto-cream overflow-hidden">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 text-center relative z-10">

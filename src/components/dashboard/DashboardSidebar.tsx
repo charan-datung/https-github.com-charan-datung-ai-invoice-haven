@@ -5,6 +5,7 @@ import {
   BarChart3,
   Rocket,
   ShoppingCart,
+  QrCode,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -20,6 +21,7 @@ const tabs = [
   { id: 'analytics', label: 'Analytics', icon: BarChart3 },
   { id: 'boost', label: 'Boost', icon: Rocket },
   { id: 'orders', label: 'Orders', icon: ShoppingCart },
+  { id: 'qrcode', label: 'QR Code', icon: QrCode },
 ];
 
 const DashboardSidebar = ({ activeTab, onTabChange }: DashboardSidebarProps) => {

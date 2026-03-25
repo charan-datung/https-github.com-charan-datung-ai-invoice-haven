@@ -2,12 +2,14 @@ import { Recycle } from 'lucide-react';
 import MaterialPriceTable from '@/components/junkshop/MaterialPriceTable';
 import JunkShopCard from '@/components/junkshop/JunkShopCard';
 import { stores } from '@/data/stores';
+import PageMeta from '@/components/shared/PageMeta';
 
 const junkShops = stores.filter((store) => store.category === 'junk-shop');
 
 const JunkShopFinderPage = () => {
   return (
     <div className="min-h-screen bg-kanto-cream">
+      <PageMeta title="Junk Shop Finder" />
       {/* Header */}
       <div className="bg-gradient-to-br from-kanto-green/10 via-kanto-teal/5 to-kanto-cream pt-10 pb-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

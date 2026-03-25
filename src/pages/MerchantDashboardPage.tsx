@@ -6,6 +6,8 @@ import AnalyticsPanel from '@/components/dashboard/AnalyticsPanel';
 import BoostPanel from '@/components/dashboard/BoostPanel';
 import OrdersList from '@/components/dashboard/OrdersList';
 import { Package, Megaphone } from 'lucide-react';
+import StoreQRCode from '@/components/store/StoreQRCode';
+import { stores } from '@/data/stores';
 
 const PlaceholderPanel = ({ title, icon: Icon }: { title: string; icon: React.ElementType }) => (
   <div className="flex flex-col items-center justify-center py-20 text-center">
@@ -19,6 +21,8 @@ const PlaceholderPanel = ({ title, icon: Icon }: { title: string; icon: React.El
 
 const MerchantDashboardPage = () => {
   const [activeTab, setActiveTab] = useState('store');
+  // Use the first store as the merchant's store for demo purposes
+  const merchantStore = stores[0];
 
   const renderPanel = () => {
     switch (activeTab) {
@@ -34,6 +38,15 @@ const MerchantDashboardPage = () => {
         return <BoostPanel />;
       case 'orders':
         return <OrdersList />;
+      case 'qrcode':
+        return (
+          <div className="max-w-md mx-auto">
+            <StoreQRCode storeId={merchantStore.id} storeName={merchantStore.name} />
+            <p className="text-sm text-kanto-gray text-center mt-4">
+              I-print at i-post ang QR code sa iyong tindahan para madaling mahanap ng mga customer.
+            </p>
+          </div>
+        );
       default:
         return <StoreEditor />;
     }
@@ -60,15 +73,10 @@ const MerchantDashboardPage = () => {
         </div>
       </header>
 
-      {/* Mobile tabs */}
-      <DashboardSidebar activeTab={activeTab} onTabChange={setActiveTab} />
-
       {/* Body */}
       <div className="flex flex-1">
-        {/* Desktop sidebar (rendered inside DashboardSidebar but only visible md+) */}
-        <div className="hidden md:block">
-          <DashboardSidebar activeTab={activeTab} onTabChange={setActiveTab} />
-        </div>
+        {/* Sidebar: renders mobile horizontal tabs + desktop vertical sidebar */}
+        <DashboardSidebar activeTab={activeTab} onTabChange={setActiveTab} />
 
         {/* Main content */}
         <div className="flex-1 p-4 sm:p-6 lg:p-8 overflow-auto">

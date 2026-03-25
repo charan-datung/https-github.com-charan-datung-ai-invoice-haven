@@ -1,14 +1,17 @@
+import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { ArrowLeft, Store as StoreIcon } from 'lucide-react';
+import { ArrowLeft, Store as StoreIcon, QrCode } from 'lucide-react';
 import { stores } from '@/data/stores';
 import StoreHeader from '@/components/store/StoreHeader';
 import StoreInfo from '@/components/store/StoreInfo';
 import ProductGrid from '@/components/store/ProductGrid';
 import ReviewSection from '@/components/store/ReviewSection';
+import StoreQRCode from '@/components/store/StoreQRCode';
 
 const StoreProfilePage = () => {
   const { storeId } = useParams<{ storeId: string }>();
   const store = stores.find((s) => s.id === storeId);
+  const [showQR, setShowQR] = useState(false);
 
   if (!store) {
     return (
@@ -45,6 +48,23 @@ const StoreProfilePage = () => {
       <StoreHeader store={store} />
       <StoreInfo store={store} />
       <ProductGrid storeId={store.id} />
+
+      {/* QR Code toggle */}
+      <div>
+        <button
+          onClick={() => setShowQR(!showQR)}
+          className="inline-flex items-center gap-2 px-4 py-2 bg-white text-kanto-brown text-sm font-semibold rounded-xl shadow-sm hover:bg-kanto-cream transition-colors"
+        >
+          <QrCode className="w-4 h-4" />
+          {showQR ? 'Itago ang QR Code' : 'Ipakita ang QR Code'}
+        </button>
+        {showQR && (
+          <div className="mt-4">
+            <StoreQRCode storeId={store.id} storeName={store.name} />
+          </div>
+        )}
+      </div>
+
       <ReviewSection storeId={store.id} />
     </div>
   );

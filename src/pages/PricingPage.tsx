@@ -3,6 +3,7 @@ import { ChevronDown, Zap, Award, Bell } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import PricingCard from '@/components/pricing/PricingCard';
 import { pricingTiers } from '@/data/pricing-tiers';
+import PageMeta from '@/components/shared/PageMeta';
 
 const boostAddOns = [
   { name: 'Boost Post', price: '₱49–99 per boost', icon: Zap },
@@ -42,6 +43,7 @@ const PricingPage = () => {
 
   return (
     <div className="min-h-screen bg-kanto-cream">
+      <PageMeta title="Pricing" />
       {/* Hero */}
       <div className="bg-gradient-to-b from-kanto-orange/5 via-kanto-cream to-kanto-cream pt-12 pb-8">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
