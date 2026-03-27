@@ -1,0 +1,20 @@
+{
+  "name": "Kanto - Ang Marketplace ng Iyong Kapitbahay",
+  "short_name": "Kanto",
+  "description": "Discover and support neighborhood businesses near you",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFF8F0",
+  "theme_color": "#F97316",
+  "orientation": "portrait-primary",
+  "categories": ["shopping", "business", "food"],
+  "icons": [
+    { "src": "/icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    { "name": "Discover Stores", "url": "/discover", "icons": [{ "src": "/icons/icon.svg", "sizes": "any" }] },
+    { "name": "Today's Deals", "url": "/deals", "icons": [{ "src": "/icons/icon.svg", "sizes": "any" }] },
+    { "name": "Junk Shop Finder", "url": "/junk-shops", "icons": [{ "src": "/icons/icon.svg", "sizes": "any" }] }
+  ]
+}

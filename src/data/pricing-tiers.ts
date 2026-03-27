@@ -1,0 +1,57 @@
+import type { PricingTier } from '@/types';
+
+export const pricingTiers: PricingTier[] = [
+  {
+    name: 'Libre',
+    price: 0,
+    period: 'Libre forever',
+    description: 'Para sa mga nagsisimula pa lang. Walang bayad, walang catch.',
+    features: [
+      'Store profile sa Kanto',
+      'Post up to 10 products',
+      'Basic store page',
+      'Customer reviews',
+      'Cash & GCash payment info',
+      'Appear in search results',
+    ],
+    highlighted: false,
+    cta: 'Magsimula na — Libre!',
+  },
+  {
+    name: 'Kanto Plus',
+    price: 149,
+    period: 'buwan',
+    description: 'Para sa mga gusto ng mas maraming customers at features.',
+    features: [
+      'Lahat ng Libre features',
+      'Unlimited products',
+      'Priority sa search results',
+      'Deal posting (up to 5/week)',
+      'Store analytics dashboard',
+      'Custom store banner',
+      'GCash & Maya integration',
+      'Order management tools',
+    ],
+    highlighted: true,
+    cta: 'Mag-upgrade sa Plus',
+  },
+  {
+    name: 'Kanto Pro',
+    price: 499,
+    period: 'buwan',
+    description: 'Para sa mga seryoso sa negosyo. Full power ng Kanto.',
+    features: [
+      'Lahat ng Plus features',
+      'Featured store badge',
+      'Unlimited deal posting',
+      'Advanced analytics & insights',
+      'Boost credits (₱200/month)',
+      'Multi-branch support',
+      'API access',
+      'Priority customer support',
+      'Early access to new features',
+    ],
+    highlighted: false,
+    cta: 'Mag-Pro na!',
+  },
+];
